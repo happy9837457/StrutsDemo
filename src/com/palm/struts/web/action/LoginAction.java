@@ -23,6 +23,7 @@ import com.palm.struts.util.Config;
 @Scope("prototype")
 @Controller
 public class LoginAction extends ActionSupport {
+	private static final long serialVersionUID = 1505706242769633220L;
 	@Resource
 	private Config config;
 	private String username;
