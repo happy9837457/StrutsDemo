@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.palm.struts.util.Config;
+import com.palm.struts.service.UserInfoService;
 
 /**
  * 登录Action
@@ -25,21 +25,24 @@ import com.palm.struts.util.Config;
 public class LoginAction extends ActionSupport {
 	private static final long serialVersionUID = 1505706242769633220L;
 	@Resource
-	private Config config;
+	private UserInfoService userInfoService;
 	private String username;
 	private String password;
 
-	@Action(value = "login", results = { @Result(name = "success", location = "/index.jsp") })
+	@Action(value = "login", results = {
+			@Result(name = "success", location = "/index.jsp"),
+			@Result(name = "input", location = "/error.jsp") })
 	public String login() throws Exception {
-//		HttpServletRequest request = ServletActionContext.getRequest();
-//		HttpSession session = request.getSession();
-		System.out.println(config.getConfig());
+		// HttpServletRequest request = ServletActionContext.getRequest();
+		// HttpSession session = request.getSession();
 		System.out.println("username:" + username + " " + "password:"
 				+ password);
-		if ("admin".equals(username) && "admin".equals(password)) {
+		boolean result = userInfoService.queryByUsernameAndPassword(username,
+				password);
+		if (result) {
 			return SUCCESS;
 		}
-		return SUCCESS;
+		return INPUT;
 	}
 
 	public String getUsername() {

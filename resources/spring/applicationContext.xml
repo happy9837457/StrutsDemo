@@ -14,10 +14,4 @@
 
 	<context:component-scan base-package="com.palm.struts" />
 	
-	<bean id="config" class="com.palm.struts.util.Config">
-		<property name="config">
-			<value>config</value>
-		</property>
-	</bean>
-
 </beans>
