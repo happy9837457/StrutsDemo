@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.action.extension" value="action"/>
+	<constant name="struts.convention.result.path" value="/" />
+	<constant name="struts.convention.package.locators" value="web,action" />
+	<constant name="struts.objectFactory" value="spring" />
+	<constant name="struts.configuration.xml.reload" value="true" />
+
+	<package name="default" namespace="/" extends="struts-default">
+		<global-results>
+			<result name="error">/error.jsp</result>
+			<result name="login" type="redirect">/login.jsp</result>
+		</global-results>
+		<global-exception-mappings>
+			<exception-mapping result="error" exception="java.lang.Exception" />
+		</global-exception-mappings>
+	</package>
+	
+	<package name="login" namespace="/" extends="default">
+		<interceptors>
+			<interceptor name="checkLogin"
+				class="com.palm.struts.web.interceptor.CheckLoginInterceptor" />
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="checkLogin" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mydefault" />
+	</package>
+</struts>

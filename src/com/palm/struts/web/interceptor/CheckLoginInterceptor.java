@@ -1,0 +1,30 @@
+package com.palm.struts.web.interceptor;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.Action;
+import com.opensymphony.xwork2.ActionInvocation;
+import com.opensymphony.xwork2.interceptor.AbstractInterceptor;
+import com.palm.struts.web.vo.UserInfoVO;
+
+/**
+ * 登录拦截器
+ * 
+ * @author weixiang.qin
+ * 
+ */
+@SuppressWarnings("serial")
+public class CheckLoginInterceptor extends AbstractInterceptor {
+
+	public String intercept(ActionInvocation actionInvocation) throws Exception {
+		HttpSession session = ServletActionContext.getRequest().getSession();
+		UserInfoVO userInfo = (UserInfoVO) session.getAttribute("userInfo");
+		if (userInfo != null) {
+			return actionInvocation.invoke();
+		} else {
+			return Action.LOGIN;
+		}
+	}
+}
